@@ -1,7 +1,7 @@
 import {parseArgs} from '@std/cli/parse-args';
 import {encodeBase64} from 'jsr:@std/encoding@~1.0.8';
 import {exportBundledObject} from './src/export_text.ts';
-import type {ImportedFile, ImportTargetFile} from './src/type.d.ts';
+import type {ImportedFile, ImportTargetFile} from './src/types.ts';
 
 const parsedArgs = parseArgs(Deno.args);
 

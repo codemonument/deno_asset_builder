@@ -1,4 +1,4 @@
-import type {ImportedFile} from './type.d.ts';
+import type {ImportedFile} from './types.ts';
 
 function exportTextFn(exportText: string): string {
 	return `
