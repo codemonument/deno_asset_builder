@@ -6,7 +6,8 @@
         ".": "./asset_builder.ts"
     },
     "exclude": [
-        "./example"
+        "./example",
+        "./asset_config.json.sample"
     ],
     "tasks": {
         "example": "deno run --allow-read ./asset_builder.ts --import-file ./example/asset_config.json > ./example/asset.ts",
