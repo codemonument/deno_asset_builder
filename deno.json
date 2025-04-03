@@ -7,7 +7,9 @@
     },
     "tasks": {
         "example": "deno run --allow-read ./asset_builder.ts --import-file ./example/asset_config.json > ./example/asset.ts",
-        "verify-example": "deno run --allow-read ./example/verify.ts"
+        "verify-example": "deno run --allow-read ./example/verify.ts",
+        "dry": "deno publish --dry-run",
+        "deploy": "deno publish"
     },
     "imports": {
         "@std/cli": "jsr:@std/cli@^1.0.15",
