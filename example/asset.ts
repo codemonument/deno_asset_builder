@@ -1,16 +1,17 @@
-import {decode} from 'https://deno.land/std@0.97.0/encoding/base64.ts';
 
-const bundledObject = {
-	files: {
-		'test-text': {
-			content: decode('SGVsbG8gV29ybGQhIQ=='),
-			extension: 'txt',
-		},
-		'test-text2': {
-			content: decode('SGVsbG8gV29ybGQhIQ=='),
-			extension: 'txt',
-		},
-	},
-};
+  import { decodeBase64 } from "jsr:@std/encoding@~1.0.8";
+  
+  const bundledObject = {
+    files:{
+      "test-text":{
+      content:decodeBase64("SGVsbG8gV29ybGQhIQ=="),
+      extension: "txt"
+    },
+    "test-text2":{
+      content:decodeBase64("SGVsbG8gV29ybGQhIQ=="),
+      extension: "txt"
+    }
+    }
+  } 
+  export default bundledObject;
 
-export default bundledObject;
