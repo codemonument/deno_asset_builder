@@ -1,7 +1,7 @@
 {
     "name": "@codemonument/asset-builder",
     "description": "Compiles assets into a assets.ts file for deno.compile - forked from https://deno.land/x/asset_builder",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "exports": {
         ".": "./asset_builder.ts"
     },
