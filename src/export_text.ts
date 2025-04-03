@@ -1,7 +1,7 @@
 import type {ImportedFile} from './type.d.ts';
 
-const exportTextFn = (exportText: string) =>
-	`
+function exportTextFn(exportText: string): string {
+	return `
   import { decodeBase64 } from "jsr:@std/encoding@~1.0.8";
   
   const bundledObject = {
@@ -11,8 +11,9 @@ const exportTextFn = (exportText: string) =>
   } 
   export default bundledObject;
 `;
+}
 
-const exportObjectText = (bundledObject: {[key: string]: ImportedFile}) => {
+function exportObjectText(bundledObject: {[key: string]: ImportedFile}): string {
 	return Object.keys(bundledObject)
 		.map(
 			(key, index) =>
@@ -21,7 +22,7 @@ const exportObjectText = (bundledObject: {[key: string]: ImportedFile}) => {
 				}"),\r\n      extension: "${bundledObject[key].extension}"\r\n    }`
 		)
 		.join(',\r\n');
-};
+}
 
 export const exportBundledObject = (bundledObject: {[key: string]: ImportedFile}) => {
 	const tmp = exportObjectText(bundledObject);
