@@ -1,47 +1,45 @@
-import { parse, encode, ImportTargetFile, ImportedFile, exportBundledObject } from "./deps.ts"
+import {parse} from './deps.ts';
+
+import {encodeBase64} from 'jsr:@std/encoding@~1.0.8';
+import {exportBundledObject} from './src/export_text.ts';
+import type {ImportedFile, ImportTargetFile} from './src/type.d.ts';
 
 const parsedArgs = parse(Deno.args);
 
 const importFileName =
-  typeof parsedArgs["import-file"] === "string"
-    ? parsedArgs["import-file"]
-    : "assets_config.json";
+	typeof parsedArgs['import-file'] === 'string' ? parsedArgs['import-file'] : 'assets_config.json';
 
-let bundleList = "";
+let bundleList = '';
 
 try {
-  const readFile = Deno.readTextFileSync(importFileName);
-  bundleList = readFile;
+	const readFile = Deno.readTextFileSync(importFileName);
+	bundleList = readFile;
 } catch (error) {
-  if (error.name === "NotFound") {
-    console.error(
-      `Import Config file [${importFileName}] is not Found!!\nplease confirm.`
-    );
-    Deno.exit();
-  }
-  throw error;
+	if (error.name === 'NotFound') {
+		console.error(`Import Config file [${importFileName}] is not Found!!\nplease confirm.`);
+		Deno.exit();
+	}
+	throw error;
 }
 
 const bundleListArr: [ImportTargetFile] = JSON.parse(bundleList).files;
 
-let bundledObject: { [key: string]: ImportedFile } = {};
+let bundledObject: {[key: string]: ImportedFile} = {};
 
-bundleListArr.forEach((file) => {
-  try {
-    const content = encode(Deno.readFileSync(file.importPath));
-    const extension = file.importPath.split(".").slice(-1)[0];
-    bundledObject[`${file.calledName}`] = { content, extension };
-  } catch (error) {
-    if (error.name === "NotFound") {
-      console.error(
-        `Import file [${file.importPath}] is not Found!!\nplease confirm.`
-      );
-      Deno.exit();
-    }
-    throw error;
-  }
+bundleListArr.forEach(file => {
+	try {
+		const content = encodeBase64(Deno.readFileSync(file.importPath));
+		const extension = file.importPath.split('.').slice(-1)[0];
+		bundledObject[`${file.calledName}`] = {content, extension};
+	} catch (error) {
+		if (error.name === 'NotFound') {
+			console.error(`Import file [${file.importPath}] is not Found!!\nplease confirm.`);
+			Deno.exit();
+		}
+		throw error;
+	}
 });
 
-const exportText = exportBundledObject(bundledObject)
+const exportText = exportBundledObject(bundledObject);
 
 console.log(exportText);
