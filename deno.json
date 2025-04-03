@@ -6,6 +6,7 @@
         ".": "./asset_builder.ts"
     },
     "tasks": {
-        "example": "deno run --allow-read ./asset_builder.ts --import-file ./example/asset_config.json >> ./example/asset.ts"
+        "example": "deno run --allow-read ./asset_builder.ts --import-file ./example/asset_config.json >> ./example/asset.ts",
+        "verify-example": "deno run --allow-read ./example/verify.ts"
     }
 }
