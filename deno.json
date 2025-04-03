@@ -5,7 +5,7 @@
     "exports": {
         ".": "./asset_builder.ts"
     },
-    "scripts": {
+    "tasks": {
         "run": "deno run --allow-read ./asset_builder.ts"
     }
 }
