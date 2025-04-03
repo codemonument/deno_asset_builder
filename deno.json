@@ -1,0 +1,9 @@
+{
+    "name": "@codemonument/asset-builder",
+    "version": "0.0.1",
+    "description": "Compiles assets into a assets.ts file for deno.compile - forked from https://deno.land/x/asset_builder",
+    "main": "index.ts",
+    "scripts": {
+        "build": "deno run --allow-read --allow-write index.ts"
+    }
+}
