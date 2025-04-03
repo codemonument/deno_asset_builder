@@ -5,34 +5,39 @@ import type {ImportedFile, ImportTargetFile} from './src/type.d.ts';
 
 const parsedArgs = parseArgs(Deno.args);
 
-const importFileName =
+const assetsConfigFileName =
 	typeof parsedArgs['import-file'] === 'string' ? parsedArgs['import-file'] : 'assets_config.json';
 
-let bundleList = '';
+let assetsConfigString = '';
 
 try {
-	const readFile = Deno.readTextFileSync(importFileName);
-	bundleList = readFile;
+	assetsConfigString = Deno.readTextFileSync(assetsConfigFileName);
 } catch (error) {
-	if (error.name === 'NotFound') {
-		console.error(`Import Config file [${importFileName}] is not Found!!\nplease confirm.`);
+	if (error instanceof Deno.errors.NotFound) {
+		console.error(
+			`Assets Config file [${assetsConfigFileName}] is not Found!!\nPlease confirm path.`
+		);
 		Deno.exit();
 	}
 	throw error;
 }
 
-const bundleListArr: [ImportTargetFile] = JSON.parse(bundleList).files;
+// The list of asset files to be bundled
+const assetFilesList: [ImportTargetFile] = JSON.parse(assetsConfigString).files;
 
-let bundledObject: {[key: string]: ImportedFile} = {};
+// The output object of bundled files
+const bundledObject: {[key: string]: ImportedFile} = {};
 
-bundleListArr.forEach(file => {
+assetFilesList.forEach(file => {
 	try {
 		const content = encodeBase64(Deno.readFileSync(file.importPath));
 		const extension = file.importPath.split('.').slice(-1)[0];
 		bundledObject[`${file.calledName}`] = {content, extension};
 	} catch (error) {
-		if (error.name === 'NotFound') {
-			console.error(`Import file [${file.importPath}] is not Found!!\nplease confirm.`);
+		if (error instanceof Deno.errors.NotFound) {
+			console.error(
+				`Asset file [${file.importPath}] is not Found - Cannot bundle!!\nPlease confirm.`
+			);
 			Deno.exit();
 		}
 		throw error;
