@@ -13,7 +13,8 @@
         "example": "deno run --allow-read ./asset_builder.ts --import-file ./example/asset_config.json > ./example/asset.ts",
         "verify-example": "deno run --allow-read ./example/verify.ts",
         "dry": "deno publish --dry-run",
-        "deploy": "deno publish"
+        "deploy": "deno publish",
+        "example-jsr": "deno run --allow-read jsr:@codemonument/asset-builder --import-file example/asset_config.json > example/asset.ts"
     },
     "imports": {
         "@std/cli": "jsr:@std/cli@^1.0.15",

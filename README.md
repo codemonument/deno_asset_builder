@@ -1,26 +1,29 @@
-# asset_builder
-Asset files (eg, text, image) bundle tool for Deno.
+# Deno asset-builder for deno compile
 
-# Install 
+Bundles asset files (eg, text, image) for deno compile into base64 encoded strings in a typescript file.
+This TS file can be used with `deno compile` to load these assets at runtime.
+
+# Usage - directly run from jsr
 
 ```sh
-deno install --allow-read https://deno.land/x/asset_builder/asset_builder.ts
-
 # Import config file from default ./assets_config.json.
-asset_builder >> asset.ts
+deno run --allow-read jsr:@codemonument/asset-builder >> asset.ts
 
 # Set Import config file.
-asset_builder --import-file my_assets_config.json >> asset.ts
+deno run --allow-read jsr:@codemonument/asset-builder --import-file my_assets_config.json  >> asset.ts
 ```
 
-# Usage 
+# Usage - install as a global binary
 
 ```sh
-# Import config file from default ./assets_config.json.
-deno run --allow-read https://deno.land/x/asset_builder/asset_builder.ts >> asset.ts
+# change the name for this binary by passing a different -n argument
+deno install --global --allow-read -n asset-builder jsr:@codemonument/asset-builder
 
-# Set Import config file.
-deno run --allow-read https://deno.land/x/asset_builder/asset_builder.ts --import-file my_assets_config.json  >> asset.ts
+# Use default config (./assets_config.json)
+asset-builder >> asset.ts
+
+# Use a custom config file
+asset-builder --import-file my_assets_config.json >> asset.ts
 ```
 
 # Configuration
@@ -30,12 +33,12 @@ Write as follows.
 
 ```json
 {
-  "files":[
-    {
-      "importPath": "./sample.txt",
-      "calledName": "sample-text"
-    }
-  ]  
+	"files": [
+		{
+			"importPath": "./sample.txt",
+			"calledName": "sample-text"
+		}
+	]
 }
 ```
 
@@ -43,13 +46,16 @@ Write as follows.
 
 The file created by asset_builder is used as follows.
 
-```ts 
-import asset from './asset.ts'
+```ts
+import asset from './asset.ts';
 
 for (const [key, value] of Object.entries(asset.files)) {
-  console.log(`key: ${key}, extension: ${value.extension}, content: ${new TextDecoder().decode(value.content) }`);
+	console.log(
+		`key: ${key}, extension: ${value.extension}, content: ${new TextDecoder().decode(
+			value.content
+		)}`
+	);
 }
 // key: test-text, extension: txt, content: Hello World!!
 // key: test-text2, extension: txt, content: Hello World!!
 ```
-
