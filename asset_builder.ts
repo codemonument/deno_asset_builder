@@ -1,10 +1,9 @@
-import {parse} from './deps.ts';
-
+import {parseArgs} from '@std/cli/parse-args';
 import {encodeBase64} from 'jsr:@std/encoding@~1.0.8';
 import {exportBundledObject} from './src/export_text.ts';
 import type {ImportedFile, ImportTargetFile} from './src/type.d.ts';
 
-const parsedArgs = parse(Deno.args);
+const parsedArgs = parseArgs(Deno.args);
 
 const importFileName =
 	typeof parsedArgs['import-file'] === 'string' ? parsedArgs['import-file'] : 'assets_config.json';

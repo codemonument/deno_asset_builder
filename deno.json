@@ -10,6 +10,7 @@
         "verify-example": "deno run --allow-read ./example/verify.ts"
     },
     "imports": {
+        "@std/cli": "jsr:@std/cli@^1.0.15",
         "@std/encoding": "jsr:@std/encoding@^1.0.8"
     }
 }
